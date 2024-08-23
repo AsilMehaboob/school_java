@@ -1,122 +1,83 @@
-import java.util.Scanner;
+#include <stdio.h>
 
+#define n 5
+int stack[n], top = -1;
 
-class Employee {
-    String name;
-    int age;
-    String phoneNumber;
-    String address;
-    double salary;
-
-    // Constructor to initialize Employee details
-    Employee(String name, int age, String phoneNumber, String address, double salary) {
-        this.name = name;
-        this.age = age;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.salary = salary;
-    }
-
-    // Method to print the salary
-    void printSalary() {
-        System.out.println("Salary: " + salary);
-    }
-
-    // Method to print employee details
-    void printDetails() {
-        System.out.println("Name: " + name);
-        System.out.println("Age: " + age);
-        System.out.println("Phone Number: " + phoneNumber);
-        System.out.println("Address: " + address);
+void push(int data)
+{
+    if (top == n - 1)
+        printf("Overflow\n");
+    else
+    {
+        top = top + 1;
+        stack[top] = data;
     }
 }
 
-// Define the Officer class that inherits from Employee
-class Officer extends Employee {
-    String specialization;
-
-    // Constructor to initialize Officer details
-    Officer(String name, int age, String phoneNumber, String address, double salary, String specialization) {
-        super(name, age, phoneNumber, address, salary);
-        this.specialization = specialization;
-    }
-
-    // Method to print the officer specialization
-    void printSpecialization() {
-        System.out.println("Specialization: " + specialization);
+void pop()
+{
+    int data;
+    if (top == -1)
+        printf("Underflow\n");
+    else
+    {
+        data = stack[top];
+        top = top - 1;
     }
 }
 
-// Define the Manager class that inherits from Employee
-class Manager extends Employee {
-    String department;
-
-    // Constructor to initialize Manager details
-    Manager(String name, int age, String phoneNumber, String address, double salary, String department) {
-        super(name, age, phoneNumber, address, salary);
-        this.department = department;
-    }
-
-    // Method to print the manager department
-    void printDepartment() {
-        System.out.println("Department: " + department);
+void display()
+{
+    if (top == -1)
+        printf("Empty stack\n");
+    else
+    {
+        for (int i = 0; i <= top; i++)
+            printf("%d ", stack[i]);  // Added space for clarity
+        printf("\n");
     }
 }
 
-// Main class to test the implementation
-public class employee {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+void peak()
+{
+    if (top != -1)
+        printf("Top is %d\n", stack[top]);
+    else
+        printf("Empty stack\n");
+}
 
-        // Input details for Officer
-        System.out.println("Enter Officer Details:");
-        System.out.print("Name: ");
-        String officerName = scanner.nextLine();
-        System.out.print("Age: ");
-        int officerAge = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-        System.out.print("Phone Number: ");
-        String officerPhoneNumber = scanner.nextLine();
-        System.out.print("Address: ");
-        String officerAddress = scanner.nextLine();
-        System.out.print("Salary: ");
-        double officerSalary = scanner.nextDouble();
-        scanner.nextLine(); // Consume newline
-        System.out.print("Specialization: ");
-        String officerSpecialization = scanner.nextLine();
+int main()
+{
+    int ch, data;
+    char y;
 
-        Officer officer = new Officer(officerName, officerAge, officerPhoneNumber, officerAddress, officerSalary, officerSpecialization);
+    do
+    {
+        printf("Choose\n");
+        printf("1.push 2.display 3.pop 4.peak\n");  // Corrected "push" to "pop"
+        scanf("%d", &ch);
+        switch (ch)
+        {
+            case 1:
+                printf("Enter element: ");
+                scanf("%d", &data);
+                push(data);
+                break;
+            case 2:
+                display();
+                break;
+            case 3:
+                pop();
+                break;
+            case 4:
+                peak();
+                break;
+            default:
+                printf("Invalid choice\n");
+        }
+        printf("Continue? (Y/N): ");
+        scanf(" %c", &y);  // Added space before %c
+    } while ((y == 'Y') || (y == 'y'));
 
-        // Input details for Manager
-        System.out.println("\nEnter Manager Details:");
-        System.out.print("Name: ");
-        String managerName = scanner.nextLine();
-        System.out.print("Age: ");
-        int managerAge = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-        System.out.print("Phone Number: ");
-        String managerPhoneNumber = scanner.nextLine();
-        System.out.print("Address: ");
-        String managerAddress = scanner.nextLine();
-        System.out.print("Salary: ");
-        double managerSalary = scanner.nextDouble();
-        scanner.nextLine(); // Consume newline
-        System.out.print("Department: ");
-        String managerDepartment = scanner.nextLine();
-
-        Manager manager = new Manager(managerName, managerAge, managerPhoneNumber, managerAddress, managerSalary, managerDepartment);
-
-        // Print the details
-        System.out.println();
-        officer.printDetails();
-        officer.printSpecialization();
-        officer.printSalary();
-
-        System.out.println();
-        manager.printDetails();
-        manager.printDepartment();
-        manager.printSalary();
-
-        scanner.close();
-    }
+    return 0;
 }
